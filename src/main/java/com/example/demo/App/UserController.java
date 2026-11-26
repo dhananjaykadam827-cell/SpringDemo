@@ -33,23 +33,35 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.CREATED).body(user);
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<User> singleUser(@PathVariable int id){
-      if(!userDB.containsKey(id)){
+  @GetMapping("/{id}/{name}")
+  public ResponseEntity<User> singleUser(
+          @PathVariable("id") int UserId,
+          @PathVariable String name){
+      if(!userDB.containsKey(UserId)){
           return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
       }
-      return ResponseEntity.ok(userDB.get(id));
+      return ResponseEntity.ok(userDB.get(UserId));
 
   }
+    @GetMapping("/User/{id}/{name}")
+    public String getUser(
+            @PathVariable int id,
+            @PathVariable String name) {
+
+        return "ID: " + id + ", Name: " + name;
+    }
 
   @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@RequestBody int id){
+    public ResponseEntity<String> deleteUser(@PathVariable int id){
       if(!userDB.containsKey(id)){
           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not deleted");
       }
             userDB.remove(id);
             return ResponseEntity.status(HttpStatus.FOUND).body("user deleted successfully");
   }
-
+        @GetMapping("/info")
+        public  String getUser(@RequestHeader ("user-agent") String userAgent){
+      return  "user agent :" + userAgent;
+        }
 
 }
