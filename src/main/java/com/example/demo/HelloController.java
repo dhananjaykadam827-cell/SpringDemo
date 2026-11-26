@@ -18,6 +18,6 @@ public class HelloController {
 //    @GetMapping("/user")
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public User getUser(){
-        return  new User(10,"danny", "email@example.com");
+        return  new User(10,"danny", "email@example.com",102);
     }
 }
